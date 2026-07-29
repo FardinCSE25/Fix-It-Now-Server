@@ -76,6 +76,7 @@ const getAllServicesFromDB = async (query: ServiceQuery) => {
             [sortBy]: sortOrder
         },
         include: {
+            bookings: true,
             category: true,
             technician: {
                 select: {
