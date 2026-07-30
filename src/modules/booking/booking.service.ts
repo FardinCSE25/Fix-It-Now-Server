@@ -83,13 +83,15 @@ const getMyBookingsFromDB = async (customerId: string) => {
 };
 
 
-const getMySpecificBookingFromDB = async (customerId: string, bookingId: string) => {
+const getMySpecificBookingFromDB = async (
+    customerId: string,
+    bookingId: string
+) => {
     const booking = await prisma.booking.findUniqueOrThrow({
         where: {
             id: bookingId,
-            customerId
+            customerId,
         },
-
         include: {
             service: true,
             payment: true,
@@ -98,7 +100,6 @@ const getMySpecificBookingFromDB = async (customerId: string, bookingId: string)
                     id: true,
                     name: true,
                     email: true,
-
                     technicianProfile: {
                         select: {
                             bio: true,
@@ -110,7 +111,17 @@ const getMySpecificBookingFromDB = async (customerId: string, bookingId: string)
         },
     });
 
-    return booking;
+    const review = await prisma.review.findFirst({
+        where: {
+            customerId,
+            technicianId: booking.technician.id,
+        },
+    });
+
+    return {
+        ...booking,
+        hasReviewed: !!review,
+    };
 };
 
 

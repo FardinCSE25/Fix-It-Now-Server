@@ -50,8 +50,8 @@ const createCheckoutSessionIntoStripe = async (customerId: string, bookingId: st
             customerId: booking.customerId,
         },
 
-        success_url: `${config.app_url}/payment?success=true`,
-        cancel_url: `${config.app_url}/payment?success=false`,
+        success_url: `${config.app_url}/dashboard/payment?success=true`,
+        cancel_url: `${config.app_url}/dashboard/payment?success=false`,
     });
 
     return {
