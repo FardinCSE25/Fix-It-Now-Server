@@ -1,271 +1,254 @@
-# 🔧 Fix It Now
+# 🔧 Fix It Now Backend
 
-> **Your Trusted Home Service Platform**
+> **REST API for the Fix It Now Home Service Platform**
 
-🌐 **Live API:** https://fix-it-now-rho.vercel.app
-
-FixItNow is a backend REST API for a home service marketplace where customers can find skilled technicians, book home services, make online payments, and leave reviews. Technicians can manage their services, availability, and bookings, while administrators can manage users and service categories.
+A secure and scalable backend API built with **Node.js, Express, TypeScript, Prisma, PostgreSQL, and JWT Authentication** that powers the Fix It Now home service marketplace.
 
 ---
 
-## 🚀 Features
+## 🌐 Live Demo
 
-### 👤 Authentication
-- User Registration (Customer / Technician)
-- User Login with JWT Authentication
-- Get Current Logged-in User
-- Role-based Authorization
+### 🚀 Frontend
 
-### 🧑‍🔧 Technician
-- Create & Update Technician Profile
-- Manage Service Availability
-- Create & Manage Services
-- View Incoming Bookings
+https://fixitnow-frontend-nine.vercel.app
+
+### 🔗 Backend API
+
+https://fix-it-now-rho.vercel.app
+
+---
+
+## 📖 Project Overview
+
+Fix It Now is a complete home service marketplace where:
+
+- Customers can browse and book services.
+- Technicians can manage their services and bookings.
+- Admins can manage users, categories, and platform activities.
+
+This repository contains the **Backend REST API**.
+
+The frontend is built separately using **Next.js App Router** and consumes this API.
+
+---
+
+# 🏗 Project Architecture
+
+```text
+Next.js Frontend
+        │
+        │ REST API
+        ▼
+Express.js Backend
+        │
+        ▼
+Prisma ORM
+        │
+        ▼
+PostgreSQL Database
+```
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
+
+- JWT Authentication
+- Secure Login
+- User Registration
+- Password Hashing (bcrypt)
+- Role-Based Authorization
+
+---
+
+## 👤 Customer
+
+- Book Services
+- View Bookings
+- Payment Integration
+- Leave Reviews
+
+---
+
+## 👨‍🔧 Technician
+
+- Manage Services
+- Update Profile
+- Manage Availability
 - Accept / Reject Bookings
 - Update Booking Status
 
-### 👨‍💼 Customer
-- Browse Available Services
-- View Technician Profiles
-- Book Services
-- Make Online Payments
-- View Payment History
-- Leave Reviews After Job Completion
+---
 
-### 🛡️ Admin
-- View All Users
+## 🛡 Admin
+
+- Manage Users
 - Ban / Activate Users
 - Manage Categories
 - View All Bookings
-- View All Reviews
 
 ---
 
-## 🛠️ Tech Stack
+## 💳 Stripe Integration
 
-- **Node.js**
-- **Express.js**
-- **TypeScript**
-- **PostgreSQL**
-- **Prisma ORM**
-- **JWT Authentication**
-- **Bcrypt**
-- **Cookie Parser**
-- **CORS**
-- **Stripe (Payment)**
+- Create Payment Intent
+- Verify Payments
+- Secure Checkout
 
 ---
 
-## 📁 Project Structure
+# 🛠 Tech Stack
+
+### Backend
+
+- Node.js
+- Express.js
+- TypeScript
+- Prisma ORM
+- PostgreSQL
+- JWT
+- Bcrypt
+- Stripe
+
+---
+
+## 📁 Folder Structure
 
 ```text
 src
 │
+├── app
+│   ├── modules
+│   ├── routes
+│   ├── middlewares
+│   └── validations
+│
 ├── config
-│   └── index.ts
-│
 ├── lib
-|   ├── stripe.ts
-│   └── prisma.ts
-│
-├── middlewares
-│   ├── auth.ts
-|   ├── routeNotFound.ts
-│   └── globalErrorHandler.ts
-|
-├── modules
-│   ├── auth
-│   │   ├── auth.controller.ts
-│   │   ├── auth.interface.ts
-│   │   ├── auth.route.ts
-│   │   └── auth.service.ts
-│   │
-│   ├── technician
-│   ├── category
-│   ├── services
-│   ├── booking
-│   ├── payment
-│   └── review
-│
 ├── utils
-│   ├── catchAsync.ts
-|   ├── jwtUtils.ts
-│   └── sendResponse.ts
-|
-├── app.ts
-└── server.ts
+├── server.ts
+└── app.ts
 ```
 
 ---
 
-## 📦 Installation
+# 🚀 Installation
 
-Clone the repository
+Clone repository
 
 ```bash
-git clone https://github.com/FardinCSE25/Fix-It-Now
+git clone https://github.com/FardinCSE25/Fix-It-Now-Server.git
 ```
 
-Go to project directory
+Move into project
 
 ```bash
-cd fixitnow
+cd Fix-It-Now-Server
 ```
 
 Install dependencies
 
 ```bash
-npm install
+bun install
+```
+
+Create environment file
+
+```env
+DATABASE_URL=your_database_url
+
+JWT_ACCESS_SECRET=your_access_secret
+
+PORT=7000
+
+STRIPE_SECRET_KEY=your_stripe_secret
+
+CLIENT_URL=http://localhost:3000
+```
+
+Run development server
+
+```bash
+bun dev
 ```
 
 ---
 
-## ▶️ Running the Project
+# 🔐 Roles
 
-Development
+### Customer
 
-```bash
-npm run dev
-
----
-
-## 🗄️ Database Schema
-
-The project contains the following models:
-
-- User
-- TechnicianProfile
-- Category
-- Service
-- Availability
-- Booking
+- Book Services
 - Payment
-- Review
+- Reviews
+
+### Technician
+
+- Manage Services
+- Booking Management
+- Availability Management
+
+### Admin
+
+- Manage Users
+- Manage Categories
+- Platform Monitoring
 
 ---
 
-## 🔄 Booking Workflow
+# 🔄 Booking Workflow
 
 ```text
-Customer
-    │
-    ▼
 Browse Services
-    │
-    ▼
-Book Technician
-    │
-    ▼
-REQUESTED
-    │
-    ▼
+      │
+      ▼
+Book Service
+      │
+      ▼
 Technician Accepts
-    │
-    ▼
-Payment
-    │
-    ▼
-PAID
-    │
-    ▼
-IN_PROGRESS
-    │
-    ▼
-COMPLETED
-    │
-    ▼
+      │
+      ▼
+Stripe Payment
+      │
+      ▼
+Job In Progress
+      │
+      ▼
+Completed
+      │
+      ▼
 Leave Review
 ```
 
 ---
 
-## 🔐 Authentication
+# 🌐 Frontend
 
-Authentication is implemented using:
+The frontend application is built with **Next.js App Router**.
 
-- JWT Access Token
-- HTTP Only Cookies
-- Password Hashing with Bcrypt
+### Live Frontend
 
----
+https://fixitnow-frontend-nine.vercel.app
 
-## 📌 API Endpoints
+### Frontend Repository
 
-### Authentication
-
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/auth/register` |
-| POST | `/api/auth/login` |
-| GET | `/api/auth/me` |
+https://github.com/FardinCSE25/Fix-It-Now-Frontend
 
 ---
 
-### Services
+# 📡 Backend API
 
-| Method | Endpoint |
-|---------|----------|
-| GET | `/api/services` |
-| GET | `/api/categories` |
-| GET | `/api/technicians` |
-| GET | `/api/technicians/:id` |
+### Live API
+
+https://fix-it-now-rho.vercel.app
 
 ---
 
-### Bookings
-
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/bookings` |
-| GET | `/api/bookings` |
-| GET | `/api/bookings/:id` |
-
----
-
-### Payments
-
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/payments/create` |
-| POST | `/api/payments/confirm` |
-| GET | `/api/payments` |
-| GET | `/api/payments/:id` |
-
----
-
-### Technician
-
-| Method | Endpoint |
-|---------|----------|
-| PUT | `/api/technician/profile` |
-| PUT | `/api/technician/availability` |
-| GET | `/api/technician/bookings` |
-| PATCH | `/api/technician/bookings/:id` |
-
----
-
-### Reviews
-
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/reviews` |
-
----
-
-### Admin
-
-| Method | Endpoint |
-|---------|----------|
-| GET | `/api/admin/users` |
-| PATCH | `/api/admin/users/:id` |
-| GET | `/api/admin/bookings` |
-| GET | `/api/admin/categories` |
-| POST | `/api/admin/categories` |
-
----
-
-## 👨‍💻 Author
+# 👨‍💻 Developer
 
 **Fardin Ahmed**
 
----
+### LinkedIn
+
+https://www.linkedin.com/in/fardin-ahmed-cse/
