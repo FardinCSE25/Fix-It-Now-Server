@@ -40,7 +40,7 @@ const createServiceIntoDB = async (payload: ServicePayload, technicianId: string
 const getAllServicesFromDB = async (query: ServiceQuery) => {
     const { type, searchTerm } = query
 
-    const sortBy = query.sortBy ? query.sortBy : "price";
+    const sortBy = query.sortBy ? query.sortBy : "createdAt";
     const sortOrder = query.sortOrder ? query.sortOrder : "desc"
     const andConditions: ServiceWhereInput[] = [];
 
